@@ -181,13 +181,13 @@ if ( command == 1 || command == 2){
       now++ ;
     }
 
-    return 0;
+
   }
 
   // 遞迴
   else{
     Process( target, now, firstNum, secNum, times ) ;
-    return 0 ;
+
   }
 
 }
