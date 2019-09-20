@@ -142,9 +142,16 @@ if ( command == 1 || command == 2){
   // 步驟一 請使用者輸入所求數字 並設為 target
   //
   int target = 0 ;
-  printf("請輸入指定數字: ") ;
+  printf("請輸入一個小於92的數字: ") ;
   scanf( "%d", &target ) ;
 
+
+  while( target > 92 ) {
+    printf("錯誤輸入 請重新嘗試一遍:  \n") ;
+    scanf( "%d", &target ) ;
+
+  }
+   
   // 步驟二 設定基本參數
   // FirstNum 和 SecNum 是費氏數列所用數字(迴圈)
   // firstNum 和 secNum 是費氏數列所用數字(遞迴)
