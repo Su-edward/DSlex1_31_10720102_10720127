@@ -68,7 +68,7 @@ unsigned long long Fibonacci( unsigned long long num1, unsigned long long num2 )
 
 } // Fibonacci
 
-// 此為一可以找出費氏數列的函式 多了紀遞迴次數
+// 此為一可以找出費氏數列的函式 多了計遞迴次數
 unsigned long long Fibonacci2( unsigned long long num1, unsigned long long num2, unsigned long long times ) {
   unsigned long long backword = 1 ;
 
