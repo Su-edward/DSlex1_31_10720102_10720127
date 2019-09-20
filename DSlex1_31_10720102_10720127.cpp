@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
+using namespace std;
 
 /* 9/11周 資料結構作業 蘇世界 , 劉宜鑫
 
@@ -22,58 +23,31 @@
 void Find( int target ){
 
 
-// 設一數字 divisor 為開始除數
-// 設計一個叫做 factor 的陣列 存放所有因數
-// 設 i 作為計算陣列之數字
-// 設 times 當作迴圈次數
-int i = 0 ;
-unsigned long long factor[99999] ;
-unsigned long long divisor = 1 ;
+// 設一數字num 為target 的開根號數
+unsigned long long num = sqrt(target) ;
+
+// 設一數字 times 為計算迴圈數的數字
+
 int times = 0 ;
 
-//在小於等於原數的情況下持續找因數
-while( divisor <= target ){
-  if ( target % divisor == 0){
-    factor[i] = divisor ;
+while( target % num != 0 ){
+    num ++ ;
     times++ ;
-    i++ ;
-  }
-  divisor ++ ;
-
 }
 
+ unsigned long long one = num ;
+ unsigned long long two = target / num ;
 
-// 若陣列大小為代表只有本身跟 1 兩個因數 印出
-if ( i == 2 ){
-    printf(" = %llu * %llu \n", factor[0], factor[1]  ) ;
-}
+ if( one > two ){
+    one = target / num ;
+    two = num ;
+ }
 
-//有超過兩個因數
-else {
-  // 設 num1 num2 存放最終因數 並設 t 為目前函數進行地步 n 是用來算減掉的次數
-  int t = 0 ;
-  int n = 1 ;
-  unsigned long long num1 = factor[0] ;
-  unsigned long long num2 = factor[i-1];
+ if ( times == 0 ) times = 1 ;
 
-  // 在不為空陣列的情況下 找出
+  printf(" = %llu * %llu ",  one, two ) ;
 
-  // 偶數個因數
-  if ( i%2 == 0 && i-1-n > n ){
-    num1 = factor[i/2];
-    num2 = factor[i/2+1] ;
-  }
-
-  //奇數個因數
-  if (i%2 != 0){
-    num1 = num2 = factor[ i/2 ] ;
-  }
-
-
-
-  printf(" = %llu * %llu\n", num1, num2 ) ;
-
-}
+  printf(" 迴圈次數: %d 次 ", times  ) ;
 
 
 
@@ -94,26 +68,42 @@ unsigned long long Fibonacci( unsigned long long num1, unsigned long long num2 )
 
 } // Fibonacci
 
+// 此為一可以找出費氏數列的函式 多了紀遞迴次數
+unsigned long long Fibonacci2( unsigned long long num1, unsigned long long num2, unsigned long long times ) {
+  unsigned long long backword = 1 ;
+
+  backword = num1 + num2 ;
+
+  printf("所求費氏數字:%llu", backword );
+
+  Find( backword ) ;
+
+  printf("遞迴次數: %llu 次 \n", times ) ;
+
+  return backword ;
+
+} // Fibonacci
+
 // 此為一個執行遞迴的函式
-void Process( int last, int now, unsigned long long first, unsigned long long second ){
+void Process( int last, int now, unsigned long long first, unsigned long long second, unsigned long long times){
 
 
     //把整個順序顛倒
     if( now <= last ){
 
-
       if( now == 1 ){
-        printf("[ 1 ]所求費氏數字:1 = 1 * 1 次數: 1 次\n" ) ;
-        Process( last, now = now + 1 , first, second ) ;
+        printf("[ 1 ]所求費氏數字:1 = 1 * 1  迴圈次數: 1 次 遞迴次數: 1 次 \n" ) ;
+        Process( last, now = now + 1 , first, second, times = times + 1) ;
       }
 
       else if( now == 2 ){
-        printf("[ 2 ]所求費氏數字:2 = 1 * 2 次數: 1 次\n" ) ;
-        Process( last, now = now + 1 , first, second ) ;
+        printf("[ 2 ]所求費氏數字:2 = 1 * 2  迴圈次數: 1 次 遞迴次數: 2 次 \n" ) ;
+        Process( last, now = now + 1 , first, second, times = times + 1 ) ;
       }
       else{
-        printf("[ %d ]", now ) ;
-        Process( last, now = now + 1, second, Fibonacci( first, second ) ) ;
+        printf("[ %d ] ", now ) ;
+
+        Process( last, now = now + 1, second, Fibonacci2( first, second, times ), times = times + 1 ) ;
 
       }
     }
@@ -136,21 +126,18 @@ printf("Input a command(0,  1,  2)\n");
 // 請使用者先輸入所想要使用指令 若錯誤則重試一次
 //
 int command ;
-
-
-
 scanf("%d", &command) ;
 
 while( command != 0 && command != 1 && command != 2 ){
   printf("Wrong Input , Please try again\n");
   scanf("%d", &command ) ;
 }
+  if( command == 1) printf("Iterative generation\n\n") ;
+  if( command == 2) printf("Recursive generatio\n\n") ;
+
 
 // 判斷輸入指令 並判斷使用
 if ( command == 1 || command == 2){
-
-  if( command == 1) printf("Iterative generation\n\n") ;
-  if( command == 2) printf("Recursive generatio\n\n") ;
 
   // 步驟一 請使用者輸入所求數字 並設為 target
   //
@@ -163,16 +150,19 @@ if ( command == 1 || command == 2){
   // firstNum 和 secNum 是費氏數列所用數字(遞迴)
   // now 則是記錄當前跑到哪一位數字
   // some 站存空間
+  // times 季遞迴次數
 
   unsigned long long FirstNum = 1 ,SecNum = 2 ;
   int now = 1 ;
+  unsigned long long times = 0 ;
   unsigned long long some = 1 ;
   unsigned long long firstNum = 1 ,secNum = 2 ;
 
   // 步驟三 開始執行程序
-  // 條件 再不大於 92 的情況下
+  // 條件 now 再不大於 92 的情況下
   // 每次接印出目前數字
 
+  // 迴圈
   if(command == 1){
     while( now <= target ){
 
@@ -182,10 +172,11 @@ if ( command == 1 || command == 2){
         some = SecNum ;
         SecNum = Fibonacci( FirstNum, SecNum ) ; // 費事數字
         FirstNum = some ;
+        printf("\n") ;
       }
       else{
-        if( now == 1) printf("所求費氏數字:%d = 1 * 1 次數: 1 次\n", now ) ;
-        else printf("所求費氏數字:%d = 1 * 2 次數: 1 次\n", now ) ;
+        if( now == 1) printf("所求費氏數字:%d = 1 * 1 迴圈次數: 1 次\n", now ) ;
+        else printf("所求費氏數字:%d = 1 * 2 迴圈次數: 1 次\n", now ) ;
       }
       now++ ;
     }
@@ -193,9 +184,9 @@ if ( command == 1 || command == 2){
     return 0;
   }
 
-
+  // 遞迴
   else{
-    Process( target, now, firstNum, secNum ) ;
+    Process( target, now, firstNum, secNum, times ) ;
     return 0 ;
   }
 
