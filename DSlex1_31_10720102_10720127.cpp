@@ -20,7 +20,7 @@ using namespace std;
 
 
 // 此為的一找出數列中的最小因數差之函數
-void Find( int target ){
+void Find( unsigned long long target ){
 
 
 // 設一數字num 為target 的開根號數
