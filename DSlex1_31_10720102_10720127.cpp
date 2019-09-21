@@ -28,7 +28,7 @@ unsigned long long num = sqrt(target) ;
 
 // 設一數字 times 為計算迴圈數的數字
 
-int times = 0 ;
+unsigned long long times = 0 ;
 
 while( target % num != 0 ){
     num ++ ;
