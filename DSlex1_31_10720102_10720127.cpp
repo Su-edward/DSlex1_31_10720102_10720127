@@ -201,13 +201,13 @@ if ( command == 1 || command == 2){
 
 }
 
-if( command == 0 ){
-  printf("Thanks for using ") ;
-  return 0 ;
-}
+
 printf("Input a command(0,  1,  2)\n");
 scanf("%d", &command) ;
 
 }
-   
+if( command == 0 ){
+  printf("Thanks for using ") ;
+  return 0 ;
+}   
 }
