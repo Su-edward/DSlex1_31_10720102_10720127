@@ -126,8 +126,10 @@ printf("Input a command(0,  1,  2)\n");
 // 請使用者先輸入所想要使用指令 若錯誤則重試一次
 //
 int command ;
+   
 scanf("%d", &command) ;
 
+while( command != 0 ) {   
 while( command != 0 && command != 1 && command != 2 ){
   printf("Wrong Input , Please try again\n");
   scanf("%d", &command ) ;
@@ -199,10 +201,12 @@ if ( command == 1 || command == 2){
 
 }
 
-printf("Thanks for using ") ;
-
-
-
-return 0 ;
-
+if( command == 0 ){
+  printf("Thanks for using ") ;
+  return 0 ;
+}
+printf("請輸入一個小於92的數字: ") ;
+scanf("%d", &command) ;
+}
+   
 }
