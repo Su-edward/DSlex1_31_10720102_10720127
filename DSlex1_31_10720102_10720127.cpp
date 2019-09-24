@@ -205,8 +205,9 @@ if( command == 0 ){
   printf("Thanks for using ") ;
   return 0 ;
 }
-printf("請輸入一個小於92的數字: ") ;
+printf("Input a command(0,  1,  2)\n");
 scanf("%d", &command) ;
+
 }
    
 }
